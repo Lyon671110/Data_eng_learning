@@ -1,0 +1,8 @@
+# C++ 编译产物
+cpp-learn/build/
+*.o
+*.out
+*.exe
+
+# 临时输出
+cpp-learn/examples/output.txt
