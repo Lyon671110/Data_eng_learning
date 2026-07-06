@@ -6,3 +6,10 @@ cpp-learn/build/
 
 # 临时输出
 cpp-learn/examples/output.txt
+
+# 点云学习模块生成数据
+point-cloud-learn/data/
+point-cloud-learn/output/
+
+# Poetry 虚拟环境
+point-cloud-learn/.venv/
