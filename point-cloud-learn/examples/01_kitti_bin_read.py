@@ -10,7 +10,6 @@ from pathlib import Path
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from utils.kitti_loader import read_kitti_bin
 from utils.sample_data import ensure_sample_data
 
 # ---------------------------------------------------------------------------
@@ -34,12 +33,16 @@ def main():
     data_dir = Path(__file__).parent.parent / "data"
     paths = ensure_sample_data(data_dir)
 
-  # 如有真实 KITTI 数据，可替换路径，例如:
-  # bin_path = "path/to/velodyne/000000.bin"
+    # 如有真实 KITTI 数据，可替换路径，例如:
+    # bin_path = "path/to/velodyne/000000.bin"
     bin_path = paths["frame_00"]
     print(f"读取文件: {bin_path}")
 
-    points = read_kitti_bin(bin_path)
+    # --- 用 numpy 读取 KITTI .bin ---
+    # 1. np.fromfile: 按 float32 逐字节读取整个二进制文件，得到一维数组
+    raw = np.fromfile(bin_path, dtype=np.float32)
+    # 2. reshape: 每 4 个值组成一个点 [x, y, z, intensity]
+    points = raw.reshape(-1, 4)
 
     print("\n=== 基本信息 ===")
     print(f"dtype : {points.dtype}")
@@ -51,7 +54,7 @@ def main():
     print("-" * len(header))
     for i, pt in enumerate(points[:5]):
         print(f"{i:4d}  {pt[0]:10.3f}  {pt[1]:10.3f}  {pt[2]:10.3f}  {pt[3]:10.3f}")
-
+    print(points[points[:,2]>2])
     print("\n=== 各字段统计 ===")
     for col, name in enumerate(["x", "y", "z", "intensity"]):
         col_data = points[:, col]

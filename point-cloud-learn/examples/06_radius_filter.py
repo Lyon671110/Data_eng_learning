@@ -12,6 +12,7 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from utils.kitti_loader import points_to_open3d, read_kitti_bin
 from utils.sample_data import ensure_sample_data
+from utils.visualize import show_geometries
 
 # ---------------------------------------------------------------------------
 # 半径滤波 (Radius Outlier Removal) 原理:
@@ -73,9 +74,10 @@ def main():
     pcd_outlier.paint_uniform_color([1.0, 0.2, 0.2])
 
     print("\n绿色=保留, 红色=半径滤波剔除")
-    o3d.visualization.draw_geometries(
+    show_geometries(
         [pcd_inlier, pcd_outlier],
         window_name="半径滤波效果",
+        output_path=Path(__file__).parent.parent / "output" / "06_radius_filter.png",
     )
 
 

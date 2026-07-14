@@ -8,6 +8,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from utils.visualize import show_geometries
 
 
 def main():
@@ -50,11 +51,10 @@ def main():
     # 添加坐标系辅助（红=X, 绿=Y, 蓝=Z）
     coord = o3d.geometry.TriangleMesh.create_coordinate_frame(size=0.5)
 
-    o3d.visualization.draw_geometries(
+    show_geometries(
         [source, coord],
         window_name="Open3D 入门 - 旋转/缩放练习",
-        width=1024,
-        height=768,
+        output_path=Path(__file__).parent.parent / "output" / "03_open3d_basics.png",
     )
 
 

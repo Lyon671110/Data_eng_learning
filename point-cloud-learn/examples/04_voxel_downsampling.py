@@ -12,6 +12,7 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from utils.kitti_loader import points_to_open3d, read_kitti_bin
 from utils.sample_data import ensure_sample_data
+from utils.visualize import show_geometries
 
 # ---------------------------------------------------------------------------
 # 体素下采样原理:
@@ -71,9 +72,10 @@ def main():
     best_ds = pcd.voxel_down_sample(voxel_size=0.2)
     best_ds.paint_uniform_color([1.0, 0.3, 0.1])
     print("\n灰色=原始, 红色=下采样(voxel=0.2)")
-    o3d.visualization.draw_geometries(
+    show_geometries(
         [pcd, best_ds],
         window_name="体素下采样对比",
+        output_path=Path(__file__).parent.parent / "output" / "04_voxel_downsample.png",
     )
 
 

@@ -12,6 +12,7 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from utils.kitti_loader import points_to_open3d, read_kitti_bin
 from utils.sample_data import ensure_sample_data
+from utils.visualize import show_geometries
 
 # ---------------------------------------------------------------------------
 # ICP (Iterative Closest Point) 原理:
@@ -80,9 +81,10 @@ def main():
     target_ds.paint_uniform_color([0.1, 0.6, 0.9])
 
     print("\n红色=配准后源点云, 蓝色=目标点云")
-    o3d.visualization.draw_geometries(
+    show_geometries(
         [source_aligned, target_ds],
         window_name="ICP 配准结果",
+        output_path=Path(__file__).parent.parent / "output" / "08_icp.png",
     )
 
 

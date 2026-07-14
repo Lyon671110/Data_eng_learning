@@ -11,7 +11,13 @@ cd point-cloud-learn
 poetry install
 ```
 
-> **无显示器环境（WSL/SSH）**：Open3D 交互窗口可能无法弹出，可设置 `export OPEN3D_HEADLESS=1` 或注释掉 `draw_geometries` 调用，示例仍会打印数值结果并保存图片。
+> **WSL / 无显示器环境**：Open3D 交互窗口可能无法响应 Q/Esc。推荐加 `--no-viz`，改为离屏渲染保存 PNG：
+>
+> ```bash
+> poetry run python examples/02_visualize_pointcloud.py --no-viz
+> ```
+>
+> 或设置环境变量：`export OPEN3D_HEADLESS=1`
 
 ## 学习路线
 

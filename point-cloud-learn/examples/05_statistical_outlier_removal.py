@@ -10,6 +10,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from utils.kitti_loader import points_to_open3d, read_kitti_bin
 from utils.sample_data import ensure_sample_data
+from utils.visualize import show_geometries
 
 # ---------------------------------------------------------------------------
 # SOR 原理:
@@ -51,9 +52,10 @@ def main():
     pcd_outlier.paint_uniform_color([1.0, 0.1, 0.1])
 
     print("\n灰色=内点, 红色=被剔除的离群点")
-    o3d.visualization.draw_geometries(
+    show_geometries(
         [pcd_inlier, pcd_outlier],
         window_name="SOR 统计去噪前后对比",
+        output_path=Path(__file__).parent.parent / "output" / "05_sor.png",
     )
 
 

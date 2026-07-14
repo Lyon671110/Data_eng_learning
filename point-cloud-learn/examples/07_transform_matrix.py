@@ -12,6 +12,7 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from utils.kitti_loader import points_to_open3d, read_kitti_bin
 from utils.sample_data import ensure_sample_data
+from utils.visualize import show_geometries
 
 # ---------------------------------------------------------------------------
 # 刚体变换: P' = R @ P + t
@@ -86,9 +87,10 @@ def main():
     coord_trans.transform(T)
 
     print("\n蓝色=原始, 橙色=变换后, 坐标轴显示各自位姿")
-    o3d.visualization.draw_geometries(
+    show_geometries(
         [pcd_orig, pcd_trans, coord_orig, coord_trans],
         window_name="刚体变换：旋转 + 平移",
+        output_path=Path(__file__).parent.parent / "output" / "07_transform.png",
     )
 
 

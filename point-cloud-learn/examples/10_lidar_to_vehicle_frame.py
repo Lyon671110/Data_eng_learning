@@ -12,6 +12,7 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from utils.kitti_loader import points_to_open3d, read_kitti_bin
 from utils.sample_data import ensure_sample_data
+from utils.visualize import show_geometries
 
 # ---------------------------------------------------------------------------
 # 外参 (Extrinsic): 描述传感器坐标系 → 车辆坐标系的刚体变换
@@ -76,9 +77,10 @@ def main():
 
     print("\n蓝色=LiDAR 坐标系点云, 橙色=车辆坐标系点云")
     print("坐标轴: 大=base_link, 小=lidar_link")
-    o3d.visualization.draw_geometries(
+    show_geometries(
         [pcd_lidar, pcd_vehicle, coord_vehicle, coord_lidar],
         window_name="LiDAR → 车辆坐标系变换",
+        output_path=Path(__file__).parent.parent / "output" / "10_lidar_to_vehicle.png",
     )
 
 

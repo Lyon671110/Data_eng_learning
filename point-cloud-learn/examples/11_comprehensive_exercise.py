@@ -13,6 +13,7 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from utils.kitti_loader import points_to_open3d, read_kitti_bin, save_kitti_bin
 from utils.sample_data import ensure_sample_data
+from utils.visualize import show_geometries
 
 
 def preprocess(pcd, voxel_size=0.2, sor_neighbors=20, sor_std=2.0):
@@ -106,9 +107,10 @@ def main():
 
     # --- Step 5: 可视化 ---
     print("\n[Step 5] 可视化 (红色=配准后帧0, 蓝色=帧1)")
-    o3d.visualization.draw_geometries(
+    show_geometries(
         [src_aligned, tgt],
         window_name="综合练习 - ICP 配准结果",
+        output_path=out_dir / "11_icp_result.png",
     )
 
     print("\n" + "=" * 60)

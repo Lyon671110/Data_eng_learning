@@ -12,6 +12,9 @@ import numpy as np
 from matplotlib.patches import FancyArrowPatch, Rectangle
 from mpl_toolkits.mplot3d import proj3d
 
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from utils.visualize import should_show_interactive
+
 # ---------------------------------------------------------------------------
 # 自动驾驶常见坐标系:
 #   - 车辆坐标系 (base_link): 原点通常在车辆后轴中心, X前 Y左 Z上 (ROS 惯例)
@@ -133,7 +136,10 @@ def main():
     print("             ├── camera_left_link")
     print("             └── camera_right_link")
 
-    plt.show()
+    if should_show_interactive():
+        plt.show()
+    else:
+        plt.close(fig)
 
 
 if __name__ == "__main__":

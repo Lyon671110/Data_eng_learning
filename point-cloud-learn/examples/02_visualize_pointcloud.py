@@ -13,6 +13,7 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from utils.kitti_loader import read_kitti_bin, points_to_open3d
 from utils.sample_data import ensure_sample_data
+from utils.visualize import should_show_interactive, show_geometries
 
 
 def visualize_matplotlib(points: np.ndarray, max_points: int = 5000):
@@ -39,7 +40,10 @@ def visualize_matplotlib(points: np.ndarray, max_points: int = 5000):
     out.parent.mkdir(exist_ok=True)
     plt.savefig(out, dpi=120)
     print(f"Matplotlib 图已保存: {out}")
-    plt.show()
+    if should_show_interactive():
+        plt.show()
+    else:
+        plt.close(fig)
 
 
 def visualize_open3d(points: np.ndarray):
@@ -48,8 +52,8 @@ def visualize_open3d(points: np.ndarray):
 
     pcd = points_to_open3d(points)
     print(f"Open3D 点数: {len(pcd.points)}")
-    print("操作提示: 鼠标左键旋转 | 滚轮缩放 | 右键平移 | Q 退出")
-    o3d.visualization.draw_geometries([pcd], window_name="Open3D 点云可视化")
+    out = Path(__file__).parent.parent / "output" / "02_open3d.png"
+    show_geometries([pcd], window_name="Open3D 点云可视化", output_path=out)
 
 
 def main():
